@@ -1,2 +1,3 @@
-# spocli
-Download your playlist from Spotify and import music from files to your playlist
+# spotify-downloader
+
+Download your playlists from Spotify or import your local music.
