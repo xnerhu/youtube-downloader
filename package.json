@@ -1,0 +1,38 @@
+{
+  "name": "spotify-downloader",
+  "version": "1.0.0",
+  "description": "Download your playlists from Spotify or import your local music.",
+  "keywords": [
+    "node",
+    "spotify",
+    "fuse-box",
+    "cli"
+  ],
+  "author": {
+    "name": "Mikołaj Palkiewicz",
+    "email": "xnerhu@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xnerhu/spotify-downloader.git"
+  },
+  "homepage": "https://github.com/xnerhu/spotify-downloader#readme",
+  "main": "./build/index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV='dev' node fuse",
+    "build": "cross-env NODE_ENV='prod' node fuse",
+    "start": "node ./build/index.js"
+  },
+  "devDependencies": {
+    "cross-env": "5.2.0",
+    "fuse-box": "3.6.0",
+    "fuse-box-typechecker": "2.11.0",
+    "tslint": "5.12.0",
+    "tslint-config-airbnb": "5.11.1",
+    "tslint-config-prettier": "1.17.0",
+    "typescript": "3.2.2",
+    "uglify-es": "3.3.9",
+    "uglify-js": "3.4.9"
+  }
+}
