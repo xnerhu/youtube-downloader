@@ -9,7 +9,6 @@ const {
 } = require('fuse-box');
 
 const isProduction = process.env.NODE_ENV === 'prod';
-const outputDir = 'build';
 
 const testWatch = TypeChecker({
   tsConfig: './tsconfig.json',
@@ -43,11 +42,11 @@ class Builder {
     this.fuseConfig = Builder.getFuseConfig(target, name, output, plugins);
   }
 
-  static getFuseConfig(target, name, output = '$name.js', plugins = []) {
+  static getFuseConfig(target, name, output = 'build', plugins = []) {
     return {
       target,
       homeDir: 'src/',
-      output: join(outputDir, output),
+      output: join(output, '$name.js'),
       tsConfig: './tsconfig.json',
       useTypescriptCompiler: true,
       sourceMaps: target !== 'server',
@@ -101,13 +100,24 @@ class Builder {
   }
 }
 
-Sparky.task('default', async () => {
+Sparky.task('default', ['server', 'cli']);
+
+Sparky.task('server', async () => {
   await new Builder({
-    name: 'app',
+    name: 'server',
     target: 'server',
-    instructions: '> [index.ts]',
+    instructions: '> [server/index.ts]',
     runWhenCompleted: true,
-    watch: '*/**',
-    plugins: [JSONPlugin()],
+    watchFilter: path => !path.match('.*.cli'),
+  }).init();
+});
+
+Sparky.task('cli', async () => {
+  await new Builder({
+    name: 'cli',
+    target: 'server',
+    instructions: '> [cli/index.ts]',
+    output: isProduction ? 'bin' : 'build',
+    watchFilter: path => !path.match('.*.server -express -body-parser'),
   }).init();
 });
