@@ -1,3 +1,3 @@
-# spotify-downloader
+# yt-utils
 
-Download your playlists from Spotify or import your local music.
+Download videos, songs and playlists from YouTube.
