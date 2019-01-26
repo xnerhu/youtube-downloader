@@ -118,6 +118,7 @@ Sparky.task('cli', async () => {
     target: 'server',
     instructions: '> [cli/index.ts]',
     output: isProduction ? 'bin' : 'build',
-    watchFilter: path => !path.match('.*.server -express -body-parser'),
+    watchFilter: path =>
+      !path.match('.*.server -express -body-parser -cookie-parser'),
   }).init();
 });
