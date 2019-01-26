@@ -18,11 +18,11 @@
     "url": "git+https://github.com/xnerhu/spotify-downloader.git"
   },
   "homepage": "https://github.com/xnerhu/spotify-downloader#readme",
-  "main": "./build/index.js",
+  "main": "./bin/cli.js",
   "scripts": {
     "dev": "concurrently \"rimraf build bin\" \"cross-env NODE_ENV='dev' node fuse\"",
     "build": "concurrently \"rimraf build bin\" \"cross-env NODE_ENV='prod' node fuse\"",
-    "start": "node ./build/index.js"
+    "start": "node ./build/server.js"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.0",
