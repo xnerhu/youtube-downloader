@@ -5,7 +5,3 @@ build
 dist
 .vscode
 .vs
-.awcache
-.fusebox
-server.js
-.env
