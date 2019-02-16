@@ -1,10 +1,19 @@
 #!/usr/bin/env node
 
+import { createWriteStream } from 'fs';
+import { resolve } from 'path';
 import { prompt } from 'enquirer';
+import * as cp from 'cli-progress';
 import * as ytdl from 'ytdl-core';
-import * as fs from 'fs';
 
 const cli = async () => {
+  const bar = new cp.Bar(
+    {
+      format: '[{bar}] {percentage}% | ETA: {eta}s',
+    },
+    cp.Presets.shades_classic,
+  );
+
   const { url, quality, format, begin } = await prompt([
     {
       type: 'input',
@@ -33,8 +42,21 @@ const cli = async () => {
     },
   ]);
 
-  // TODO
-  ytdl(url, { quality, begin }).pipe(fs.createWriteStream(`video.mp4`));
+  const video = ytdl(url, { quality, begin });
+
+  video.pipe(createWriteStream(resolve(process.cwd(), 'video.mp4')));
+
+  video.once('response', res => {
+    bar.start(res.headers['content-length'], 0);
+  });
+
+  video.on('progress', (chunkLength, downloaded, total) => {
+    bar.update(downloaded);
+  });
+
+  video.on('end', () => {
+    bar.stop();
+  });
 };
 
 cli();

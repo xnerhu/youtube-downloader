@@ -27,11 +27,13 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
+    "@types/cli-progress": "1.8.0",
     "@types/node": "10.12.21",
     "typescript": "3.2.4"
   },
   "dependencies": {
     "axios": "0.18.0",
+    "cli-progress": "2.1.1",
     "enquirer": "2.3.0",
     "ytdl-core": "0.29.1"
   }
