@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/xnerhu/yt-utils#readme",
   "bin": {
-    "ytutils": "build/index.js"
+    "ytd": "build/index.js"
   },
   "scripts": {
     "dev": "tsc --watch",
@@ -27,12 +27,12 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "@types/inquirer": "0.0.43",
     "@types/node": "10.12.21",
     "typescript": "3.2.4"
   },
   "dependencies": {
     "axios": "0.18.0",
-    "inquirer": "6.2.2"
+    "enquirer": "2.3.0",
+    "ytdl-core": "0.29.1"
   }
 }
