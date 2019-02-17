@@ -1,53 +1,74 @@
-#!/usr/bin/env node
-
+import { prompt } from 'inquirer';
+import * as ytdl from 'ytdl-core';
+import * as ora from 'ora';
 import { createWriteStream } from 'fs';
 import { resolve } from 'path';
-import { prompt } from 'enquirer';
-import * as cp from 'cli-progress';
-import * as ytdl from 'ytdl-core';
+import { Bar, Presets } from 'cli-progress';
 
-const cli = async () => {
-  const bar = new cp.Bar(
-    {
-      format: '[{bar}] {percentage}% | ETA: {eta}s',
-    },
-    cp.Presets.shades_classic,
-  );
+export default async () => {
+  const { url } = await prompt({
+    type: 'input',
+    name: 'url',
+    message: "What's the url?",
+  });
 
-  const { url, quality, format, begin } = await prompt([
+  let spinner = ora('Checking...').start();
+  let info;
+
+  try {
+    info = await ytdl.getBasicInfo(url);
+    spinner.stop();
+  } catch (err) {
+    return spinner.warn('Incorrect url.');
+  }
+
+  const { quality, start, end } = await prompt([
     {
-      type: 'input',
-      name: 'url',
-      message: "What's the url?",
-    },
-    {
-      type: 'autocomplete',
+      type: 'list',
       name: 'quality',
       message: 'Select quality',
       choices: ['highest', 'lowest'],
-      initial: 'highest',
+      default: 'highest',
     },
     {
-      type: 'autocomplete',
+      type: 'list',
       name: 'format',
       message: 'Select format',
       choices: ['mp4', 'mp3', 'gif', 'ogg', 'wav'],
-      initial: 'mp4',
+      default: 'mp4',
     },
     {
       type: 'input',
-      name: 'begin',
-      message: 'Begin',
-      initial: '0:00',
+      name: 'start',
+      message: 'Start',
+      default: '0:00',
+    },
+    {
+      type: 'input',
+      name: 'end',
+      message: 'End',
+      default: '0:00',
     },
   ]);
 
-  const video = ytdl(url, { quality, begin });
+  const bar = new Bar(
+    {
+      format: '[{bar}] {percentage}% | ETA: {eta}s',
+      clearOnComplete: true,
+    },
+    Presets.shades_classic,
+  );
 
-  video.pipe(createWriteStream(resolve(process.cwd(), 'video.mp4')));
+  const { title } = info.player_response.videoDetails;
+  const video = ytdl(url, { quality, begin: start });
+
+  spinner = ora().start();
+
+  video.pipe(createWriteStream(resolve(process.cwd(), title + '.mp4')));
 
   video.once('response', res => {
     bar.start(res.headers['content-length'], 0);
+    spinner.stop();
   });
 
   video.on('progress', (chunkLength, downloaded, total) => {
@@ -58,5 +79,3 @@ const cli = async () => {
     bar.stop();
   });
 };
-
-cli();

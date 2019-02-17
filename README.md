@@ -1,4 +1,4 @@
-# ytd
+# yader
 
 Download videos, songs and playlists from YouTube.
 

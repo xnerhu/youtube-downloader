@@ -1,5 +1,5 @@
 {
-  "name": "yt-utils",
+  "name": "yader",
   "version": "1.0.0",
   "description": "Download videos, songs and playlists from YouTube.",
   "keywords": [
@@ -15,11 +15,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xnerhu/yt-utils.git"
+    "url": "git+https://github.com/xnerhu/yader.git"
   },
-  "homepage": "https://github.com/xnerhu/yt-utils#readme",
+  "homepage": "https://github.com/xnerhu/yader#readme",
   "bin": {
-    "ytd": "build/index.js"
+    "yader": "build/bin/index.js"
   },
   "scripts": {
     "dev": "tsc --watch",
@@ -28,13 +28,16 @@
   },
   "devDependencies": {
     "@types/cli-progress": "1.8.0",
+    "@types/inquirer": "0.0.43",
     "@types/node": "10.12.21",
+    "@types/ora": "3.0.0",
     "typescript": "3.2.4"
   },
   "dependencies": {
     "axios": "0.18.0",
     "cli-progress": "2.1.1",
-    "enquirer": "2.3.0",
+    "inquirer": "6.2.2",
+    "ora": "3.1.0",
     "ytdl-core": "0.29.1"
   }
 }
