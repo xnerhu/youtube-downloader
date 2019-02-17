@@ -1,5 +1,5 @@
 {
-  "name": "yader",
+  "name": "youtube-downloader",
   "version": "1.0.0",
   "description": "Download videos, songs and playlists from YouTube.",
   "keywords": [
@@ -15,9 +15,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xnerhu/yader.git"
+    "url": "git+https://github.com/xnerhu/youtube-downloader.git"
   },
-  "homepage": "https://github.com/xnerhu/yader#readme",
+  "homepage": "https://github.com/xnerhu/youtube-downloader#readme",
   "bin": {
     "yader": "build/bin/index.js"
   },
